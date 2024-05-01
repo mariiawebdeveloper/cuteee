@@ -8,7 +8,6 @@ const App = () => {
         top: '50%',
         left: '40%',
     });
-    const [, setAttempts] = useState(0); // Состояние для отслеживания количества попыток
     const [showFinalMessage, setShowFinalMessage] = useState(false); // Состояние для отображения финального сообщения
 
     // Функция для генерации случайного положения кнопки
@@ -25,37 +24,23 @@ const App = () => {
         const randomTop = Math.random() * (windowHeight - buttonHeight);
         const randomLeft = Math.random() * (windowWidth - buttonWidth);
 
-        // Устанавливаем положение кнопки, избегая выхода за пределы экрана
-        const top = randomTop >= 0 ? randomTop : 0;
-        const left = randomLeft >= 0 ? randomLeft : 0;
-
         return {
-            top: `${top}px`,
-            left: `${left}px`,
+            top: `${randomTop}px`,
+            left: `${randomLeft}px`,
         };
     };
 
-    // Функция, вызываемая при наведении на кнопку "Да"
-    const handleMouseOverYes = () => {
-        // Увеличиваем количество попыток
-        setAttempts((prevAttempts) => {
-            const newAttempts = prevAttempts + 1;
-
-            // Если количество попыток достигает 10, показываем финальное сообщение
-            if (newAttempts >= 10) {
-                setShowFinalMessage(true);
-                return prevAttempts; // Останавливаем дальнейшее увеличение счетчика
-            }
-
-            const newPosition = getRandomPosition();
-            setButtonPosition(newPosition);
-            return newAttempts; // Возвращаем обновленное количество попыток
-        });
+    // Функция, вызываемая при нажатии на кнопку "Да"
+    const handleYesClick = () => {
+        // Перемещаем кнопку на случайное место
+        const newPosition = getRandomPosition();
+        setButtonPosition(newPosition);
     };
 
     // Функция, вызываемая при нажатии на кнопку "Нет"
     const handleNoClick = () => {
-        setShowFinalMessage(true); // Показываем финальное сообщение
+        // Показываем финальное сообщение
+        setShowFinalMessage(true);
     };
 
     return (
@@ -73,7 +58,7 @@ const App = () => {
             {/* Отображение Cute GIF сверху */}
             <img
                 src={Cute}
-                alt="Описание GIF"
+                alt="Cute GIF"
                 style={{
                     position: 'absolute',
                     top: '0',
@@ -85,15 +70,15 @@ const App = () => {
             <div
                 style={{
                     position: 'absolute',
-                    top: '40%', // Выравниваем по вертикали
+                    top: '40%',
                     left: '50%',
                     transform: 'translateX(-50%)',
                     fontSize: '24px',
                     fontWeight: 'bold',
                     color: '#000', // Цвет текста
                     backgroundColor: '#FFD1DC', // Нежнорозовый цвет подложки
-                    padding: '5px', // Добавляем отступы вокруг текста
-                    borderRadius: '5px', // Скругленные углы
+                    padding: '10px',
+                    borderRadius: '5px',
                 }}
             >
                 Грустишь?
@@ -102,27 +87,31 @@ const App = () => {
             <button
                 style={{
                     position: 'absolute',
-                    top: '50%',
+                    top: buttonPosition.top,
                     left: buttonPosition.left,
                     width: '100px',
                     height: '40px',
-                    backgroundColor: 'lightblue', // Цвет фона кнопки "Да"
-                    color: '#000',
+                    backgroundColor: 'lightblue',
+                    color: '#FFF',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
                 }}
-                onMouseOver={handleMouseOverYes}
+                onClick={handleYesClick} // Обработчик события onClick
             >
-                Да
+                Дя((
             </button>
             {/* Кнопка "Нет" */}
             <button
                 style={{
                     position: 'absolute',
                     top: '50%',
-                    left: '60%', // Позиция слева (примерно на одном уровне с кнопкой "Да")
+                    left: '60%',
                     width: '100px',
                     height: '40px',
-                    backgroundColor: 'lightcoral', // Цвет фона кнопки "Нет"
+                    backgroundColor: 'lightcoral',
                     color: '#FFF',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
                 }}
                 onClick={handleNoClick}
             >
@@ -133,15 +122,15 @@ const App = () => {
                 <div
                     style={{
                         position: 'absolute',
-                        top: '55%',
+                        top: '60%',
                         left: '50%',
                         transform: 'translateX(-50%)',
+                        backgroundColor: 'rgba(255, 182, 193, 0.7)',
+                        padding: '10px',
+                        borderRadius: '5px',
                         fontSize: '24px',
                         fontWeight: 'bold',
                         color: '#FFF',
-                        backgroundColor: 'rgba(255, 182, 193, 0.7)', // Полупрозрачная нежнорозовая подложка
-                        padding: '10px', // Отступы
-                        borderRadius: '5px', // Скругленные углы
                     }}
                 >
                     Вот видишь, все хорошо, ты не грустишь &#60;3
