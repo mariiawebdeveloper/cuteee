@@ -8,7 +8,7 @@ const App = () => {
         top: '50%',
         left: '40%',
     });
-    const [attempts, setAttempts] = useState(0); // Состояние для отслеживания количества попыток
+    const [, setAttempts] = useState(0); // Состояние для отслеживания количества попыток
     const [showFinalMessage, setShowFinalMessage] = useState(false); // Состояние для отображения финального сообщения
 
     // Функция для генерации случайного положения кнопки
